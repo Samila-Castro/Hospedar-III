@@ -4,6 +4,7 @@ const users = require('./services/users');
 const imoveis = require('./services/imoveis');
 const auth = require("./services/auth");
 const jwt = require("./services/jwt");
+const { request } = require('express');
 
 // users
 router.post('/session', async function(req, res, next) {
@@ -83,5 +84,17 @@ router.post('/imoveis', auth.authenticate(), async function(req, res, next) {
     next(err);
   }
 });
+
+router.delete('imoveis/:id', auth.authenticate(), async function(req, res, next){
+  const { id } = request.params;
+
+  try{
+    const result = await imovel.delet(id);
+  }catch(err){
+      console.error(`Erro ao deletar imóvel`, err.message);
+      next(err);
+  }
+
+})
 
 module.exports = router;

@@ -40,8 +40,20 @@ async function create(imovel) {
 
 }
 
+async function delet(id, imovel) {
+
+  const rows = await db.query(
+      'DELETE FROM imoveis  WHERE id = $1',
+      [id]
+  );
+  return helper.emptyOrRows(rows);
+
+  
+}
+
 module.exports = {
   getAll,
   create,
-  getById
+  getById,
+  delet
 }
