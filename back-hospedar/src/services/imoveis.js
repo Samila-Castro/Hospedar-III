@@ -1,5 +1,7 @@
 const db = require('./db');
 const helper = require('../helper');
+const {v4 : uuidv4} = require('uuid');
+
 
 async function getAll() {
   const rows = await db.query(
@@ -26,8 +28,8 @@ async function getById(id) {
 
 async function create(imovel) {
   const result = await db.query(
-    'INSERT INTO imoveis(name, country, city) VALUES ($1, $2, $3) RETURNING *',
-    [imovel.name, imovel.country, imovel.city]
+    'INSERT INTO imoveis(name, country, city, id) VALUES ($1, $2, $3, $4) RETURNING *',
+    [imovel.name, imovel.country, imovel.city, uuidv4() ]
   );
   let message = 'Erro ao criar imóvel';
 

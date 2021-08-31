@@ -6,7 +6,7 @@ const config = {
     port: env.DB_PORT || '5432',
     user: env.DB_USER || 'postgres',
     password: env.DB_PASSWORD || '1234',
-    database: env.DB_NAME || 'hospedar',
+    database: env.DB_NAME || 'postgres',
   },
 };
 
