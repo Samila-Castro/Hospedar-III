@@ -3,15 +3,25 @@ const helper = require('../helper');
 const {v4 : uuidv4} = require('uuid');
 
 
-async function getAll() {
-  const rows = await db.query(
-    'SELECT * FROM imoveis'
-  );
-  const imoveis = helper.emptyOrRows(rows);
+async function getAll(qtde, atributo) {
+  // const rows = await db.query(
+  //   'SELECT * FROM imoveis'
+  // );
+  // const imoveis = helper.emptyOrRows(rows);
 
+  // return {
+  //   imoveis
+  // }
+  const limite = qtde ? `LIMIT ${qtde}` : '';
+  const rows = await db.query(
+    `SELECT * FROM imoveis WHERE atributo LIKE '%${atributo}%' ${limite}`
+  );
+
+  const data = helper.emptyOrRows(rows);
   return {
-    imoveis
+    data
   }
+
 }
 
 async function getById(id) {
