@@ -4,7 +4,7 @@ const users = require('./services/users');
 const imoveis = require('./services/imoveis');
 const auth = require("./services/auth");
 const jwt = require("./services/jwt");
-const { request } = require('express');
+const { request, response } = require('express');
 
 // users
 router.post('/session', async function(req, res, next) {
@@ -85,6 +85,24 @@ router.post('/imoveis', auth.authenticate(), async function(req, res, next) {
   }
 });
 
+router.put('imoveis/:id', auth.authenticate(), async function(req, res, next) {
+  const { id } = req.params;
+
+  const { name, country, city } = req.body;
+
+  try {
+    const imovelUpdate = { name, country, city }
+
+    const result = await imovel.update(id , imovelUpdate);
+
+    res.json(result);
+
+  }catch(err){
+    console.error(`Erro ao buscar imóvel`, err.message);
+    next(err);
+  }
+});
+
 router.delete('imoveis/:id', auth.authenticate(), async function(req, res, next){
   const { id } = request.params;
 
@@ -95,6 +113,6 @@ router.delete('imoveis/:id', auth.authenticate(), async function(req, res, next)
       next(err);
   }
 
-})
+});
 
 module.exports = router;

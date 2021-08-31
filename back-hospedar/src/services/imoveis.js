@@ -51,9 +51,19 @@ async function delet(id, imovel) {
   
 }
 
+async function update(id, imovel){
+  const rows = await db.query(
+    'UPDATE imoveis SET name = $1, country = $2, city = $3 WHERE id = $5',
+    [ imovel.name, imovel.country, imovel.city, id]
+  );
+  return helper.emptyOrRows(rows);
+
+}
+
 module.exports = {
   getAll,
   create,
   getById,
-  delet
+  delet,
+  update
 }
