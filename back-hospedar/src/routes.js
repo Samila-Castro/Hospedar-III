@@ -50,8 +50,9 @@ router.post('/users', async function(req, res, next) {
 
 
 // Imoveis
-router.get('/imoveis', auth.authenticate(), async function(req, res, next) {
+router.get('/imoveis',  auth.authenticate(), async function(req, res, next) {
   const { name, qtde} = req.body;
+  console.log( { name, qtde});
   try {
     if(!['CLIENT','BUSINESS'].includes(req.user.type)) return res.status(401).json({ error: "Você não tem permissão" });
     res.json(await imoveis.getAll(qtde, name));

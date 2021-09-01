@@ -52,6 +52,7 @@ export default {
     async mounted(){
       try {
         const response = await api.get('/imoveis');
+        console.log(response);
         this.imoveis = response.data.imoveis
         
       } catch (error) {
