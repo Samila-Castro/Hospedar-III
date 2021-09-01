@@ -98,6 +98,10 @@ router.put('/imoveis/:id', auth.authenticate(), async function(req, res, next) {
   try {
     const imovelUpdate = { name, country, city };
 
+    if(!name||!country||!city){
+      throw new Error("Todos os campos devem ser preenchidos");
+    }
+
     const result = await imoveis.update(id , imovelUpdate);
 
     res.json(result);
