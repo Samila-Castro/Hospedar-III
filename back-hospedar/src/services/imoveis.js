@@ -49,7 +49,7 @@ async function create(imovel) {
 
 }
 
-async function delet(id, imovel) {
+async function delet(id) {
 
   const rows = await db.query(
       'DELETE FROM imoveis  WHERE id = $1',
@@ -62,7 +62,7 @@ async function delet(id, imovel) {
 
 async function update(id, imovel){
   const rows = await db.query(
-    'UPDATE imoveis SET name = $1, country = $2, city = $3 WHERE id = $5',
+    'UPDATE imoveis SET name = $1, country = $2, city = $3 WHERE id = $4',
     [ imovel.name, imovel.country, imovel.city, id]
   );
   return helper.emptyOrRows(rows);
