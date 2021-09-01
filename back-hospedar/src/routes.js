@@ -79,6 +79,9 @@ router.post('/imoveis', auth.authenticate(), async function(req, res, next) {
   if(!['BUSINESS'].includes(req.user.type)) return res.status(401).json({ error: "Você não tem permissão" });
   try {
    const {name, country, city } = req.body;
+   if(!name||!country||!city){
+     throw new Error("Todos os campos devem ser preenchidos");
+   }
     res.json(await imoveis.create({ name, country, city}));
     
   } catch (err) {
