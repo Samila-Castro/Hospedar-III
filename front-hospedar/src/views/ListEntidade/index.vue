@@ -26,7 +26,10 @@
           <td>{{imovel.name}}</td>
           <td>{{imovel.country}}</td>
           <td>{{imovel.city}}</td>
-          <td> <Button name="Detalhes" :to="`/entidade/${imovel.id}`" primaryColor /></td>
+          <!-- <td> <Button name="Detalhes" :to="`/entidade/${imovel.id}`" primaryColor /></td> -->
+          <td class="icons"> <i class="el-icon-edit"></i>
+           <i class="el-icon-tickets"></i>
+          <i class="el-icon-delete"></i></td>
         </tr>
 
       </table>
@@ -133,5 +136,11 @@
   .input {
     display: flex;
     flex-direction: column;
+  }
+  
+  .icons {
+  display: flex;
+    flex-direction: row;
+    justify-content: space-around;
   }
 </style>
