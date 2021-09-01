@@ -14,7 +14,6 @@
           <el-button @click="getBy()" icon="el-icon-search" circle></el-button>
         </div>
       </div>
-      
       <table :data="imoveis">
         <tr>
           <th>Nome da propriedade</th>
@@ -27,9 +26,11 @@
           <td>{{imovel.country}}</td>
           <td>{{imovel.city}}</td>
           <!-- <td> <Button name="Detalhes" :to="`/entidade/${imovel.id}`" primaryColor /></td> -->
-          <td class="icons"> <i class="el-icon-edit"></i>
-           <i class="el-icon-tickets"></i>
-          <i class="el-icon-delete"></i></td>
+          <td class="icons">
+            <el-button @click="handleEdit(imovel.id)" size="small"><i class="el-icon-edit"></i></el-button>
+            <el-button size="small"><i class="el-icon-tickets"></i></el-button>
+            <el-button @click="handleDelete(imovel.id)" size="small"> <i class="el-icon-delete"></i></el-button>
+          </td>
         </tr>
 
       </table>
@@ -70,7 +71,7 @@
     async mounted() {
       try {
         const response = await api.get('/imoveis');
-        console.log(response.data);
+
         this.imoveis = response.data;
 
       } catch (error) {
@@ -79,12 +80,24 @@
 
     },
 
-    methods : {
-       async getBy() {
-                const response = await api.get(`/imoveis?qtde=${this.input}&nameOrCountryOrCity=${this.input1}`)
-                this.imoveis = response.data;
+    methods: {
+      async getBy() {
+        const response = await api.get(`/imoveis?qtde=${this.input}&nameOrCountryOrCity=${this.input1}`)
+        this.imoveis = response.data;
 
-            }
+      },
+      async handleDelete(id) {
+
+        await api.delete(`/imoveis/${id}`);
+        const response = await api.get('/imoveis')
+        this.imoveis = response.data;
+      },
+      async handleEdit(id) {
+        this.$router.push(`/edit/${id}`);
+
+        console.log("Chamou handleEdit ", id);
+
+      }
 
     }
 
@@ -126,21 +139,22 @@
     align-items: center;
 
   }
-  .btn{
+
+  .btn {
     display: flex;
     flex-direction: row;
     align-items: center;
-    
+
   }
 
   .input {
     display: flex;
     flex-direction: column;
   }
-  
+
   .icons {
-  display: flex;
+    display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: space-evenly;
   }
 </style>
