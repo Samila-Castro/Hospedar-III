@@ -3,7 +3,7 @@ const helper = require('../helper');
 const {v4 : uuidv4} = require('uuid');
 
 
-async function getAll(qtde,name) {
+async function getAll(qtde,nameOrCountryOrCity='') {
   // const rows = await db.query(
   //   'SELECT * FROM imoveis'
   // );
@@ -14,13 +14,12 @@ async function getAll(qtde,name) {
   // }
   const limite = qtde ? `LIMIT ${qtde}` : '';
   const rows = await db.query(
-    `SELECT * FROM imoveis WHERE name  LIKE '%${name}%' ${limite}`
+    `SELECT * FROM imoveis WHERE name  LIKE '%${nameOrCountryOrCity}%' OR country  LIKE '%${nameOrCountryOrCity}%' OR city LIKE '%${nameOrCountryOrCity}%' ${limite}`
   );
 
-  const data = helper.emptyOrRows(rows);
-  return {
-    data
-  }
+  const imoveis = helper.emptyOrRows(rows);
+  return  imoveis;
+  
 
 }
 
