@@ -27,9 +27,9 @@
           <td>{{imovel.city}}</td>
           <!-- <td> <Button name="Detalhes" :to="`/entidade/${imovel.id}`" primaryColor /></td> -->
           <td class="icons">
-            <el-button @click="handleEdit(imovel.id)" size="small"><i class="el-icon-edit"></i></el-button>
+            <el-button v-if="isBusiness" @click="handleEdit(imovel.id)" size="small"><i class="el-icon-edit"></i></el-button>
             <el-button @click="handleDetails(imovel.id)" size="small"><i class="el-icon-tickets" ></i></el-button>
-            <el-button @click="handleDelete(imovel.id)" size="small"> <i class="el-icon-delete"></i></el-button>
+            <el-button v-if="isBusiness" @click="handleDelete(imovel.id)" size="small"> <i class="el-icon-delete"></i></el-button>
           </td>
         </tr>
 
