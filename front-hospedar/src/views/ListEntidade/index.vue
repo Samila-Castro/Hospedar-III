@@ -5,9 +5,9 @@
     <div class="container-table">
       <div class="btn">
         <div class="input">
-          <el-input size="mini" placeholder="Quantidade" v-model="input">
+          <el-input size="mini" placeholder="Amount" v-model="input">
           </el-input>
-          <el-input size="mini" placeholder="Nome" v-model="input1">
+          <el-input size="mini" placeholder="Attribute" v-model="input1">
           </el-input>
         </div>
         <div>
@@ -16,10 +16,10 @@
       </div>
       <table :data="imoveis">
         <tr>
-          <th>Nome da propriedade</th>
-          <th>País</th>
-          <th>Cidade</th>
-          <th>Ações</th>
+          <th>Property name</th>
+          <th>Country</th>
+          <th>City</th>
+          <th>Actions</th>
         </tr>
         <tr v-for="imovel in imoveis" :key="imovel.id">
           <td>{{imovel.name}}</td>
@@ -28,7 +28,7 @@
           <!-- <td> <Button name="Detalhes" :to="`/entidade/${imovel.id}`" primaryColor /></td> -->
           <td class="icons">
             <el-button @click="handleEdit(imovel.id)" size="small"><i class="el-icon-edit"></i></el-button>
-            <el-button size="small"><i class="el-icon-tickets"></i></el-button>
+            <el-button @click="handleDetails(imovel.id)" size="small"><i class="el-icon-tickets" ></i></el-button>
             <el-button @click="handleDelete(imovel.id)" size="small"> <i class="el-icon-delete"></i></el-button>
           </td>
         </tr>
@@ -96,6 +96,13 @@
         this.$router.push(`/edit/${id}`);
 
         console.log("Chamou handleEdit ", id);
+
+      },
+      
+      async handleDetails(id) {
+        this.$router.push(`/entidade/${id}`);
+
+        console.log("Chamou handleDetails ", id);
 
       }
 
