@@ -52,7 +52,7 @@ router.post('/users', async function(req, res, next) {
 // Imoveis
 router.get('/imoveis',  auth.authenticate(), async function(req, res, next) {
   const { nameOrCountryOrCity, qtde, } = req.query;
-  console.log( { nameOrCountryOrCity, qtde});
+  // console.log( { nameOrCountryOrCity, qtde});
   try {
     if(!['CLIENT','BUSINESS'].includes(req.user.type)) return res.status(401).json({ error: "Você não tem permissão" });
     res.json(await imoveis.getAll(qtde, nameOrCountryOrCity));
@@ -87,15 +87,15 @@ router.post('/imoveis', auth.authenticate(), async function(req, res, next) {
   }
 });
 
-router.put('imoveis/:id', auth.authenticate(), async function(req, res, next) {
+router.put('/imoveis/:id', auth.authenticate(), async function(req, res, next) {
   const { id } = req.params;
 
   const { name, country, city } = req.body;
 
   try {
-    const imovelUpdate = { name, country, city }
+    const imovelUpdate = { name, country, city };
 
-    const result = await imovel.update(id , imovelUpdate);
+    const result = await imoveis.update(id , imovelUpdate);
 
     res.json(result);
 
@@ -105,11 +105,15 @@ router.put('imoveis/:id', auth.authenticate(), async function(req, res, next) {
   }
 });
 
-router.delete('imoveis/:id', auth.authenticate(), async function(req, res, next){
+router.delete('/imoveis/:id', auth.authenticate(), async function(req, res, next){
+  
   const { id } = request.params;
 
   try{
+   
     const result = await imovel.delet(id);
+    
+    response.json(result[0]); 
   }catch(err){
       console.error(`Erro ao deletar imóvel`, err.message);
       next(err);
