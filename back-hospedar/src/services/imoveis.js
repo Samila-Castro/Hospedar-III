@@ -3,7 +3,7 @@ const helper = require('../helper');
 const {v4 : uuidv4} = require('uuid');
 
 
-async function getAll(qtde, atributo) {
+async function getAll(qtde,name) {
   // const rows = await db.query(
   //   'SELECT * FROM imoveis'
   // );
@@ -14,7 +14,7 @@ async function getAll(qtde, atributo) {
   // }
   const limite = qtde ? `LIMIT ${qtde}` : '';
   const rows = await db.query(
-    `SELECT * FROM imoveis WHERE atributo LIKE '%${atributo}%' ${limite}`
+    `SELECT * FROM imoveis WHERE name  LIKE '%${name}%' ${limite}`
   );
 
   const data = helper.emptyOrRows(rows);
