@@ -107,13 +107,13 @@ router.put('/imoveis/:id', auth.authenticate(), async function(req, res, next) {
 
 router.delete('/imoveis/:id', auth.authenticate(), async function(req, res, next){
   
-  const { id } = request.params;
+  const { id } = req.params;
 
   try{
    
-    const result = await imovel.delet(id);
+    const result = await imoveis.delet(id);
     
-    response.json(result[0]); 
+    res.json(result[0]); 
   }catch(err){
       console.error(`Erro ao deletar imóvel`, err.message);
       next(err);
