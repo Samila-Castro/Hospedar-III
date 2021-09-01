@@ -4,14 +4,14 @@
       <h2>Register a property</h2>
       <form class="form" @submit="(e) => submitForm(e)">
         <label> Property name
-          <input type="text" v-model="form.name" id="name" required />
+          <input type="text" v-model="form.name" id="name" minlength="8" required />
         </label>
 
         <label>Country
-          <input type="text" v-model="form.country" id="country" required />
+          <input type="text" v-model="form.country" id="country" minlength="8" required />
         </label>
         <label>City
-          <input type="text" v-model="form.city" id="city" required />
+          <input type="text" v-model="form.city" id="city"  minlength="8" required />
         </label>
         <Button name="register property" type="submit" primaryColor />
       </form>
