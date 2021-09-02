@@ -4,7 +4,7 @@ const users = require('./services/users');
 const imoveis = require('./services/imoveis');
 const auth = require("./services/auth");
 const jwt = require("./services/jwt");
-const { request } = require('express');
+const { request, response } = require('express');
 
 // users
 router.post('/session', async function(req, res, next) {
@@ -50,10 +50,12 @@ router.post('/users', async function(req, res, next) {
 
 
 // Imoveis
-router.get('/imoveis', auth.authenticate(), async function(req, res, next) {
+router.get('/imoveis',  auth.authenticate(), async function(req, res, next) {
+  const { nameOrCountryOrCity, qtde, } = req.query;
+  // console.log( { nameOrCountryOrCity, qtde});
   try {
     if(!['CLIENT','BUSINESS'].includes(req.user.type)) return res.status(401).json({ error: "Você não tem permissão" });
-    res.json(await imoveis.getAll());
+    res.json(await imoveis.getAll(qtde, nameOrCountryOrCity));
   } catch (err) {
     console.error(`Erro ao buscar imóveis`, err.message);
     next(err);
@@ -77,6 +79,9 @@ router.post('/imoveis', auth.authenticate(), async function(req, res, next) {
   if(!['BUSINESS'].includes(req.user.type)) return res.status(401).json({ error: "Você não tem permissão" });
   try {
    const {name, country, city } = req.body;
+   if(!name||!country||!city){
+     throw new Error("Todos os campos devem ser preenchidos");
+   }
     res.json(await imoveis.create({ name, country, city}));
     
   } catch (err) {
@@ -85,16 +90,28 @@ router.post('/imoveis', auth.authenticate(), async function(req, res, next) {
   }
 });
 
-router.delete('imoveis/:id', auth.authenticate(), async function(req, res, next){
-  const { id } = request.params;
+router.put('/imoveis/:id', auth.authenticate(), async function(req, res, next) {
+  const { id } = req.params;
 
-  try{
-    const result = await imovel.delet(id);
+  const { name, country, city } = req.body;
+
+  try {
+    const imovelUpdate = { name, country, city };
+
+    if(!name||!country||!city){
+      throw new Error("Todos os campos devem ser preenchidos");
+    }
+
+    const result = await imoveis.update(id , imovelUpdate);
+
+    res.json(result);
+
   }catch(err){
-      console.error(`Erro ao deletar imóvel`, err.message);
-      next(err);
+    console.error(`Erro ao buscar imóvel`, err.message);
+    next(err);
   }
+});
 
-})
+
 
 module.exports = router;

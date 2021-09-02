@@ -12,6 +12,7 @@ import BusinessLogin from "../views/BusinessLogin/";
 import CadastroEntidade from "../views/CadastroEntidade/";
 import ListEntidade from "../views/ListEntidade/";
 import DetailsEntidade from "../views/DetailsEntidade/";
+import EditEntidade from "../views/EditEntidade/"
 
 
 
@@ -44,6 +45,12 @@ const routes = [
     path: "/business-login",
     name: "BusinessLogin",
     component: BusinessLogin,
+  },
+  
+  {
+    path: "/edit/:id",
+    name: "EditEntidade",
+    component: EditEntidade,
   },
   {
     path: "/entidade-cadastro",
